@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class Database {
 
     public Database(String path) {
         this.path = Paths.get(path);
+        init();
     }
 
     private String getDbName() {
@@ -30,16 +32,39 @@ public class Database {
     private void init() {
         try {
             List<String> lines = Files.readAllLines(path, Charset.forName("ISO-8859-1"));
-            createTable(lines.get(0));
+            String[] columnNames = createTable(lines.get(0));
             for (int i = 1; i < lines.size(); i++) {
-                //insertRow
+                insertRow(lines.get(i));
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void createTable(String line) {
+    private void insertRow(String line) throws SQLException {
+        String[] values = line.split(",");
+
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO ").append(getTableName());
+        query.append(" VALUES (");
+        String prefix = "";
+        for (String value: values) {
+            query.append(prefix);
+            query.append("'").append(value).append("'");
+            prefix = ",";
+        }
+        query.append(")");
+
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        int count = statement.executeUpdate(query.toString());
+        statement.close();
+        connection.close();
+    }
+
+    private String[] createTable(String line) throws SQLException {
         String[] columnNames = line.split(",");
 
         StringBuilder query = new StringBuilder();
@@ -48,18 +73,17 @@ public class Database {
         String prefix = "";
         for (String columnName: columnNames) {
             query.append(prefix);
-            query.append(columnName.trim()).append(" ").append("varchar(255)")
+            query.append(columnName.trim()).append(" ").append("varchar(255)");
+            prefix = ",";
         }
         query.append(")");
 
-
         Connection connection = getConnection();
-
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Statement statement = connection.createStatement();
+        int count = statement.executeUpdate(query.toString());
+        statement.close();
+        connection.close();
+        return columnNames;
     }
 
     public String getTableName() {
