@@ -39,4 +39,37 @@ public class ApacheDerbyTest {
 
         connection.close();
     }
+
+    @Test
+    public void createData() throws Exception {
+        Connection connection = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+            // jdbc:derby:[subsubprotocol:][databaseName][;attribute=value]*
+            //connection = DriverManager.getConnection("jdbc:derby:memory:testdb;create=true", "APP", "");
+            connection = DriverManager.getConnection("jdbc:derby:memory:testdb;create=true");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Assert.fail("Exception during database startup.");
+        }
+        Assert.assertNotNull(connection);
+
+        Statement statement = connection.createStatement();
+
+        String createQuery = "create table data (id int, name varchar(255))";
+        int count = statement.executeUpdate(createQuery);
+        System.out.println(count);
+
+        String insertQuery = "insert into data values (10, 'name')";
+        int insertCount = statement.executeUpdate(insertQuery);
+        System.out.println(insertCount);
+
+        String selectQuery = "select * from data";
+        ResultSet resultSet = statement.executeQuery(selectQuery);
+        while (resultSet.next()) {
+            System.out.println(resultSet.getInt("id") + " " + resultSet.getString("name"));
+        }
+
+        connection.close();
+    }
 }
