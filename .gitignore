@@ -15,6 +15,7 @@ hs_err_pid*
 /bin
 /build
 /.gradle
+target/
 */target/*
 */.idea/*
 /.idea/workspace.xml
