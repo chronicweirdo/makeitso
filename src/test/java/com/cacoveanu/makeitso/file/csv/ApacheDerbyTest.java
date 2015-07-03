@@ -44,9 +44,8 @@ public class ApacheDerbyTest {
     public void createData() throws Exception {
         Connection connection = null;
         try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+            // Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             // jdbc:derby:[subsubprotocol:][databaseName][;attribute=value]*
-            //connection = DriverManager.getConnection("jdbc:derby:memory:testdb;create=true", "APP", "");
             connection = DriverManager.getConnection("jdbc:derby:memory:testdb;create=true");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -57,19 +56,25 @@ public class ApacheDerbyTest {
         Statement statement = connection.createStatement();
 
         String createQuery = "create table data (id int, name varchar(255))";
-        int count = statement.executeUpdate(createQuery);
-        System.out.println(count);
+        int createCount = statement.executeUpdate(createQuery);
+        Assert.assertEquals(createCount, 0);
 
-        String insertQuery = "insert into data values (10, 'name')";
+        String insertQuery = "insert into data values (10, 'thename')";
         int insertCount = statement.executeUpdate(insertQuery);
-        System.out.println(insertCount);
+        Assert.assertEquals(insertCount, 1);
 
         String selectQuery = "select * from data";
         ResultSet resultSet = statement.executeQuery(selectQuery);
+        Assert.assertNotNull(resultSet);
+        int resultSetRowCount = 0;
         while (resultSet.next()) {
-            System.out.println(resultSet.getInt("id") + " " + resultSet.getString("name"));
+            resultSetRowCount++;
+            Assert.assertEquals(resultSet.getInt("id"), 10);
+            Assert.assertEquals(resultSet.getString("name"), "thename");
         }
+        Assert.assertEquals(resultSetRowCount, 1);
 
+        statement.close();
         connection.close();
     }
 }

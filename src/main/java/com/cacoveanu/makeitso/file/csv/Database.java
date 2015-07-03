@@ -23,9 +23,6 @@ public class Database {
     private List<Path> paths = new ArrayList<>();
     private Map<String, List<String>> columnNames = new HashMap<>();
 
-    public Database() {
-    }
-
     public static String getTableName(Path path) {
         return path.getFileName().toString();
     }
@@ -116,5 +113,9 @@ public class Database {
 
     private String getDbName() {
         return "csvdb";
+    }
+
+    public List<Path> getPaths() {
+        return paths;
     }
 }
