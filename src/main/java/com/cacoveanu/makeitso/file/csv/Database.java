@@ -17,11 +17,19 @@ import java.util.List;
  */
 public class Database {
 
+    private static final String ISO_8859_1 = "ISO-8859-1";
     private Path path;
+    private Charset charset;
     private String dbName;
+    private List<String> columnNames;
 
     public Database(String path) {
+        this(path, ISO_8859_1);
+    }
+
+    public Database(String path, String charset) {
         this.path = Paths.get(path);
+        this.charset = Charset.forName(charset);
         init();
     }
 
@@ -31,8 +39,8 @@ public class Database {
 
     private void init() {
         try {
-            List<String> lines = Files.readAllLines(path, Charset.forName("ISO-8859-1"));
-            String[] columnNames = createTable(lines.get(0));
+            List<String> lines = Files.readAllLines(path, charset);
+            createTable(lines.get(0));
             for (int i = 1; i < lines.size(); i++) {
                 insertRow(lines.get(i));
             }
@@ -59,12 +67,12 @@ public class Database {
 
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
-        int count = statement.executeUpdate(query.toString());
+        statement.executeUpdate(query.toString());
         statement.close();
         connection.close();
     }
 
-    private String[] createTable(String line) throws SQLException {
+    private void createTable(String line) throws SQLException {
         String[] columnNames = line.split(",");
 
         StringBuilder query = new StringBuilder();
@@ -72,18 +80,26 @@ public class Database {
         query.append(" (");
         String prefix = "";
         for (String columnName: columnNames) {
+            String trimmedColumnName = columnName.trim();
             query.append(prefix);
-            query.append(columnName.trim()).append(" ").append("varchar(255)");
+            query.append(trimmedColumnName).append(" ").append("varchar(255)");
             prefix = ",";
+            this.columnNames.add(trimmedColumnName);
         }
         query.append(")");
 
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
-        int count = statement.executeUpdate(query.toString());
+        statement.executeUpdate(query.toString());
         statement.close();
         connection.close();
-        return columnNames;
+    }
+
+    public String getColumnName(int index) {
+        if (0 <= index && index < columnNames.size()) {
+            return columnNames.get(index);
+        }
+        return null;
     }
 
     public String getTableName() {
