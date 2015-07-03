@@ -84,7 +84,7 @@ public class Database {
         query.append(" (");
         String prefix = "";
         for (String columnName: columnNames) {
-            String trimmedColumnName = columnName.trim();
+            String trimmedColumnName = columnName.trim().replaceAll("\\s", "_");
             query.append(prefix);
             query.append(trimmedColumnName).append(" ").append("varchar(255)");
             prefix = ",";

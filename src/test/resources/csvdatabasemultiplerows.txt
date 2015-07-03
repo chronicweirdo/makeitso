@@ -1,0 +1,5 @@
+object id,name,value
+1,os name,windows
+1,user name,user1
+2,os name,linux
+2,user name,user2
