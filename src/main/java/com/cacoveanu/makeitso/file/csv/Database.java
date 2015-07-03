@@ -1,6 +1,5 @@
 package com.cacoveanu.makeitso.file.csv;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -10,7 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by scacoveanu on 2/7/2015.
@@ -18,31 +20,32 @@ import java.util.List;
 public class Database {
 
     private static final String ISO_8859_1 = "ISO-8859-1";
-    private Path path;
-    private Charset charset;
-    private String dbName;
-    private List<String> columnNames;
+    private List<Path> paths = new ArrayList<>();
+    private Map<String, List<String>> columnNames = new HashMap<>();
 
-    public Database(String path) {
-        this(path, ISO_8859_1);
+    public Database() {
     }
 
-    public Database(String path, String charset) {
-        this.path = Paths.get(path);
-        this.charset = Charset.forName(charset);
-        init();
-    }
-
-    private String getDbName() {
+    public static String getTableName(Path path) {
         return path.getFileName().toString();
     }
 
-    private void init() {
+    public void read(Path path) {
+        read(path, ISO_8859_1);
+    }
+
+    public void read(Path path, String charsetName) {
+        this.paths.add(path);
+        Charset charset = Charset.forName(charsetName);
+        String tableName = getTableName(path);
+
         try {
             List<String> lines = Files.readAllLines(path, charset);
-            createTable(lines.get(0));
+
+            createTable(tableName, lines.get(0));
+
             for (int i = 1; i < lines.size(); i++) {
-                insertRow(lines.get(i));
+                insertRow(tableName, lines.get(i));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,11 +54,11 @@ public class Database {
         }
     }
 
-    private void insertRow(String line) throws SQLException {
+    private void insertRow(String tableName, String line) throws SQLException {
         String[] values = line.split(",");
 
         StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO ").append(getTableName());
+        query.append("INSERT INTO ").append(tableName);
         query.append(" VALUES (");
         String prefix = "";
         for (String value: values) {
@@ -72,11 +75,12 @@ public class Database {
         connection.close();
     }
 
-    private void createTable(String line) throws SQLException {
+    private void createTable(String tableName, String line) throws SQLException {
         String[] columnNames = line.split(",");
+        this.columnNames.put(tableName, new ArrayList<>());
 
         StringBuilder query = new StringBuilder();
-        query.append("CREATE TABLE ").append(getTableName());
+        query.append("CREATE TABLE ").append(tableName);
         query.append(" (");
         String prefix = "";
         for (String columnName: columnNames) {
@@ -84,7 +88,7 @@ public class Database {
             query.append(prefix);
             query.append(trimmedColumnName).append(" ").append("varchar(255)");
             prefix = ",";
-            this.columnNames.add(trimmedColumnName);
+            this.columnNames.get(tableName).add(trimmedColumnName);
         }
         query.append(")");
 
@@ -95,15 +99,8 @@ public class Database {
         connection.close();
     }
 
-    public String getColumnName(int index) {
-        if (0 <= index && index < columnNames.size()) {
-            return columnNames.get(index);
-        }
-        return null;
-    }
-
-    public String getTableName() {
-        return "DATA";
+    public List<String> getColumnNames(Path path) {
+        return columnNames.get(getTableName(path));
     }
 
     public Connection getConnection() {
@@ -115,5 +112,9 @@ public class Database {
             ex.printStackTrace();
         }
         return connection;
+    }
+
+    private String getDbName() {
+        return "csvdb";
     }
 }
