@@ -5,14 +5,34 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-       <bean id="httpRemotingHelloService"
-             class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-              <property name="serviceUrl"
-                        value="http://localhost:8087/HelloService">
-              </property>
-              <property name="serviceInterface"
-                        value="com.cacoveanu.makeitso.remoting.HelloService">
-              </property>
-       </bean>
+    <bean id="httpRemotingHelloService"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl"
+                  value="http://localhost:8087/HelloService">
+        </property>
+        <property name="serviceInterface"
+                  value="com.cacoveanu.makeitso.remoting.HelloService">
+        </property>
+    </bean>
+
+    <bean id="httpRemotingUserService"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl"
+                  value="http://uiimsapp1.ingenuity.com:8148/ims/api/inguser/v1/user">
+        </property>
+        <property name="serviceInterface"
+                  value="com.ingenuity.inguser.api.v1.service.UserService">
+        </property>
+    </bean>
+
+    <bean id="httpRemotingSessionSummaryService"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl"
+                  value="http://uilogapp1.ingenuity.com:8151/eventlog/api/sessionSummaryService">
+        </property>
+        <property name="serviceInterface"
+                  value="com.ingenuity.eventlog.api.v1.service.SessionSummaryService">
+        </property>
+    </bean>
 
 </beans>
