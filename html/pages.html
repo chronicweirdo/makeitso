@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paging effect</title>
+    <script type="application/javascript" src="jquery.min.js"></script>
+    <script type="application/javascript">
+        $(document).ready(function() {
+            console.log("done loading");
+
+            initDocument();
+            $(window).resize(initDocument);
+            $(window).scroll(scrollFunction);
+        });
+
+        function initDocument() {
+            var windowHeight = document.documentElement.clientHeight;
+            var windowWidth = document.documentElement.clientWidth;
+
+            $("body").css("padding-top", windowHeight + "px");
+            $(".page").each(function(index, element) {
+                var height = $(element).height();
+                var width = $(element).width();
+
+                /*var verticalPadding = (windowHeight - height) / 2;
+                var horizontalPadding = (windowWidth - width) / 2;
+
+                $(element).css("padding-top", verticalPadding + "px");
+                $(element).css("padding-bottom", verticalPadding + "px");
+                $(element).css("padding-left", horizontalPadding + "px");
+                $(element).css("padding-right", horizontalPadding + "px");*/
+
+                $(element).css("position", "fixed");
+                $(element).css("display", "block");
+                $(element).css("top", 0);
+                $(element).css("height", windowHeight + "px");
+                $(element).css("width", windowWidth + "px");
+            });
+        }
+
+        function scrollFunction() {
+            $(".page").each(function(index, element) {
+                $(element).css("top", (- $(document).scrollTop()) + "px");
+            });
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <p style="background-color: beige" class="page">The first page</p>
+    <p style="background-color: burlywood" class="page">The second page</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis bibendum ligula. In eu varius enim. Etiam cursus augue sit amet nibh tristique, vel luctus tellus tincidunt. Cras porta justo in nibh tristique pretium. Morbi volutpat ex non mollis malesuada. Vivamus posuere ante sit amet volutpat mollis. Suspendisse iaculis bibendum eros, eu mattis sem fermentum a. Pellentesque quis nisi id nibh pulvinar finibus. Vestibulum ultrices convallis augue, eget malesuada lectus blandit vel. Maecenas pretium purus sapien, luctus pellentesque risus venenatis ut. Nullam nec lorem eget elit aliquam hendrerit. Aliquam sodales, sem non semper pulvinar, nisl enim aliquam arcu, fermentum gravida dolor felis quis augue. Morbi semper consequat turpis, id lobortis quam interdum in. Fusce et bibendum mauris. Maecenas tempor velit non lacus interdum, vel finibus mi venenatis. Fusce consectetur dui a augue feugiat, ut scelerisque diam convallis.</p>
+    <p>In vitae suscipit nisl. Etiam sed bibendum sem, eget sagittis lorem. Nam accumsan iaculis lacus sed gravida. Duis gravida lectus sollicitudin enim efficitur commodo sed vitae nunc. Ut dignissim ligula nulla, ac tincidunt velit gravida ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur placerat orci dolor, non posuere metus malesuada a.</p>
+    <p>Etiam fringilla nulla augue, et tempus ipsum vulputate eget. Pellentesque in dapibus mauris. Vestibulum pharetra urna ut nisi ultricies, et sodales est vestibulum. Sed laoreet eleifend magna vulputate venenatis. Aliquam facilisis arcu in blandit viverra. Nam volutpat rutrum ornare. Mauris ultrices commodo pellentesque. In sit amet nulla non felis accumsan ultricies at ullamcorper odio. Aliquam varius maximus suscipit. Donec ultricies odio ac mauris mollis, quis suscipit quam sagittis.</p>
+    <p>Sed hendrerit lacinia felis, vitae consectetur leo volutpat ac. Nulla eget fringilla erat. Praesent a finibus lacus. Aenean vel blandit ex, et condimentum nisi. Vestibulum vel nulla commodo, convallis nisl ac, vulputate nulla. Mauris lacinia, mauris id egestas bibendum, libero eros elementum felis, at efficitur mi ipsum vel augue. Aenean finibus tortor elit, non convallis quam pulvinar eget. Etiam sit amet consequat purus. Nam quis felis vel sapien tristique eleifend. Nullam id vulputate arcu. Vivamus at pulvinar mauris, in accumsan massa.</p>
+    <p>Curabitur pellentesque nisi a nunc euismod luctus. Donec ac dignissim leo, sed consequat neque. Sed mollis ultricies orci, vitae dignissim augue congue eget. Aliquam elit tellus, efficitur id rutrum ut, tincidunt eget odio. Quisque eget tellus id velit mollis vestibulum. Vestibulum luctus rutrum mollis. Sed nec mi ante. Duis id ultricies ante. Nunc ante libero, eleifend eu vulputate vitae, tincidunt eu lacus. Proin pulvinar enim eu mollis laoreet. Curabitur id aliquam nisi. </p>
+</body>
+</html>
