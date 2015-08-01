@@ -17,10 +17,10 @@
             var windowHeight = document.documentElement.clientHeight;
             var windowWidth = document.documentElement.clientWidth;
 
-            $("body").css("padding-top", windowHeight + "px");
+            var height = 0;
             $(".page").each(function(index, element) {
-                var height = $(element).height();
-                var width = $(element).width();
+                /*var height = $(element).height();
+                var width = $(element).width();*/
 
                 /*var verticalPadding = (windowHeight - height) / 2;
                 var horizontalPadding = (windowWidth - width) / 2;
@@ -35,12 +35,24 @@
                 $(element).css("top", 0);
                 $(element).css("height", windowHeight + "px");
                 $(element).css("width", windowWidth + "px");
+                $(element).css("z-index", -index);
+
+                height = height + $(element).height();
             });
+            $("body").css("padding-top", height + "px");
         }
 
         function scrollFunction() {
+            //var windowHeight = document.documentElement.clientHeight;
+            var height = 0;
             $(".page").each(function(index, element) {
-                $(element).css("top", (- $(document).scrollTop()) + "px");
+                var scroll = $(document).scrollTop()
+                if (scroll > height) {
+                    $(element).css("top", (height - scroll) + "px");
+                } else {
+                    $(element).css("top", 0);
+                }
+                height = height + $(element).height();
             });
         }
     </script>
