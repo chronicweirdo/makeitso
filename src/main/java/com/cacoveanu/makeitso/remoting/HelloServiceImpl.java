@@ -5,8 +5,12 @@ import org.springframework.stereotype.Component;
 /**
  * Created by scacoveanu on 3/7/2015.
  */
-@Component
+//@Component
 public class HelloServiceImpl implements HelloService {
+
+    public HelloServiceImpl() {
+        System.out.println("service initialized");
+    }
 
     @Override
     public String sayHello(String name) {

@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import java.io.File;
+
 /**
  * Created by scacoveanu on 3/7/2015.
  *
@@ -24,7 +26,9 @@ public class EmbeddedRemotingServerTest {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
-        dispatcherServlet.setContextConfigLocation("src/test/resources/DefaultServlet-servlet.xml");
+        File file = new File("src/test/resources/DefaultServlet-servlet.xml");
+        System.out.println(file.exists());
+        dispatcherServlet.setContextConfigLocation(file.getAbsolutePath());
 
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
         context.addServlet(servletHolder, "/*");

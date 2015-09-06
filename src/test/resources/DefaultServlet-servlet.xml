@@ -17,7 +17,7 @@
 
     <bean name="/HelloService"
           class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter"
-          lazy-init="true">
+          lazy-init="false">
         <property name="service" ref="helloService" />
         <property name="serviceInterface"
                   value="com.cacoveanu.makeitso.remoting.HelloService" />

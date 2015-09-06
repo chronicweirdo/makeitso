@@ -1,13 +1,26 @@
 ----------------------------------------------------------------
-Fri Jul 03 11:37:09 EEST 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014e-530f-ed1b-000006a75808 
-on database directory memory:C:\workspace\makeitso\testdb with class loader sun.misc.Launcher$AppClassLoader@6d06d69c 
-Loaded from file:/C:/Users/scacoveanu/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
+Sun Sep 06 14:20:03 EEST 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014f-a262-6bf7-000006579fb8 
+on database directory memory:C:\Users\silviu\workspace\makeitso\testdb with class loader sun.misc.Launcher$AppClassLoader@75b84c92 
+Loaded from file:/C:/Users/silviu/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_20-b26
-user.dir=C:\workspace\makeitso
-os.name=Windows 7
+java.runtime.version=1.8.0_60-b27
+user.dir=C:\Users\silviu\workspace\makeitso
+os.name=Windows 8.1
 os.arch=amd64
-os.version=6.1
+os.version=6.3
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sun Sep 06 14:20:04 EEST 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance 176240b2-014f-a262-6bf7-000006579fb8 
+on database directory memory:C:\Users\silviu\workspace\makeitso\csvdb with class loader sun.misc.Launcher$AppClassLoader@75b84c92 
+Loaded from file:/C:/Users/silviu/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_60-b27
+user.dir=C:\Users\silviu\workspace\makeitso
+os.name=Windows 8.1
+os.arch=amd64
+os.version=6.3
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

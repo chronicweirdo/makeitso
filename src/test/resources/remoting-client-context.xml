@@ -15,24 +15,4 @@
         </property>
     </bean>
 
-    <bean id="httpRemotingUserService"
-          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-        <property name="serviceUrl"
-                  value="http://uiimsapp1.ingenuity.com:8148/ims/api/inguser/v1/user">
-        </property>
-        <property name="serviceInterface"
-                  value="com.ingenuity.inguser.api.v1.service.UserService">
-        </property>
-    </bean>
-
-    <bean id="httpRemotingSessionSummaryService"
-          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-        <property name="serviceUrl"
-                  value="http://uilogapp1.ingenuity.com:8151/eventlog/api/sessionSummaryService">
-        </property>
-        <property name="serviceInterface"
-                  value="com.ingenuity.eventlog.api.v1.service.SessionSummaryService">
-        </property>
-    </bean>
-
 </beans>

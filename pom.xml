@@ -14,6 +14,7 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -40,7 +41,7 @@
             <version>4.1.7.RELEASE</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.ingenuity.ims_component</groupId>
             <artifactId>inguser-api</artifactId>
             <version>1.2.345910</version>
@@ -50,7 +51,7 @@
             <groupId>com.ingenuity.eventlog_component</groupId>
             <artifactId>eventlog-api</artifactId>
             <version>1.2.349508</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
