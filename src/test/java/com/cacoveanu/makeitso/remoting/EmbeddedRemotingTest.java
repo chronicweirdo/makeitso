@@ -56,6 +56,31 @@ public class EmbeddedRemotingTest {
         Assert.assertNotNull(hello);
         System.out.println("sayHello: " + hello);
     }
+
+    @Test
+    public void testCancelComplexOperation() throws Exception {
+        HttpInvokerProxyFactoryBean proxyFactoryBean = new HttpInvokerProxyFactoryBean();
+        proxyFactoryBean.setServiceUrl("http://localhost:8087/HelloService");
+        proxyFactoryBean.setServiceInterface(HelloService.class);
+        proxyFactoryBean.afterPropertiesSet();
+
+        HelloService helloService = (HelloService) proxyFactoryBean.getObject();
+        Thread operationCallThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Long result = helloService.complexOperation(0L);
+                    System.out.println("remote complex operation result = " + result);
+                } catch (InterruptedException e) {
+                    System.out.println("remote complex operation was canceled");
+                }
+            }
+        });
+        operationCallThread.start();
+        Thread.sleep(5000);
+        helloService.cancelComplexOperation();
+        operationCallThread.join();
+    }
     //@Test
     public void testSayHello() throws Exception {
         //startServer();

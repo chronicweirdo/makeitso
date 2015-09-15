@@ -6,4 +6,8 @@ package com.cacoveanu.makeitso.remoting;
 public interface HelloService {
 
     String sayHello(String name);
+
+    Long complexOperation(Long startIn) throws InterruptedException;
+
+    void cancelComplexOperation();
 }
