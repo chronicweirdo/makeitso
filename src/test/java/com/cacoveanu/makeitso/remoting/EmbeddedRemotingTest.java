@@ -25,7 +25,7 @@ public class EmbeddedRemotingTest {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
-        dispatcherServlet.setContextConfigLocation("src/test/resources/DefaultServlet-servlet.xml");
+        dispatcherServlet.setContextConfigLocation("src/test/resources/dispatcherServlet-servlet.xml");
 
         ServletHolder servletHolder = new ServletHolder(dispatcherServlet);
         context.addServlet(servletHolder, "/*");

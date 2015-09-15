@@ -8,18 +8,18 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <!-- This default handler takes care of each of the services enumerated below -->
-    <bean id="defaultHandlerMapping"
-          class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+    <!--bean id="defaultHandlerMapping"
+          class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" /-->
 
     <bean id="helloService" class="com.cacoveanu.makeitso.remoting.HelloServiceImpl"/>
 
     <!-- SpringHTTP Service Exposure -->
 
-    <bean name="/HelloService"
+    <!--bean name="/HelloService"
           class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter"
           lazy-init="false">
         <property name="service" ref="helloService" />
         <property name="serviceInterface"
                   value="com.cacoveanu.makeitso.remoting.HelloService" />
-    </bean>
+    </bean-->
 </beans>

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by scacoveanu on 3/7/2015.
  */
-//@Component
+@Component
 public class HelloServiceImpl implements HelloService {
 
     public HelloServiceImpl() {
