@@ -6,6 +6,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
@@ -44,6 +45,18 @@ public class EmbeddedRemotingTest {
     }
 
     @Test
+    public void testSayHelloProgramatic() throws Exception {
+        HttpInvokerProxyFactoryBean proxyFactoryBean = new HttpInvokerProxyFactoryBean();
+        proxyFactoryBean.setServiceUrl("http://localhost:8087/HelloService");
+        proxyFactoryBean.setServiceInterface(HelloService.class);
+        proxyFactoryBean.afterPropertiesSet();
+
+        HelloService helloService = (HelloService) proxyFactoryBean.getObject();
+        String hello = helloService.sayHello("John");
+        Assert.assertNotNull(hello);
+        System.out.println("sayHello: " + hello);
+    }
+    //@Test
     public void testSayHello() throws Exception {
         //startServer();
 
