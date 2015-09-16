@@ -16,7 +16,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  */
 public class EmbeddedRemotingTest {
 
-    private HelloService helloService;
+    private ComplexOperationService complexOperationService;
     private Server server;
 
     private void startServer() throws Exception {
@@ -48,11 +48,11 @@ public class EmbeddedRemotingTest {
     public void testSayHelloProgramatic() throws Exception {
         HttpInvokerProxyFactoryBean proxyFactoryBean = new HttpInvokerProxyFactoryBean();
         proxyFactoryBean.setServiceUrl("http://localhost:8087/HelloService");
-        proxyFactoryBean.setServiceInterface(HelloService.class);
+        proxyFactoryBean.setServiceInterface(ComplexOperationService.class);
         proxyFactoryBean.afterPropertiesSet();
 
-        HelloService helloService = (HelloService) proxyFactoryBean.getObject();
-        String hello = helloService.sayHello("John");
+        ComplexOperationService complexOperationService = (ComplexOperationService) proxyFactoryBean.getObject();
+        String hello = complexOperationService.sayHello("John");
         Assert.assertNotNull(hello);
         System.out.println("sayHello: " + hello);
     }
@@ -61,15 +61,15 @@ public class EmbeddedRemotingTest {
     public void testCancelComplexOperation() throws Exception {
         HttpInvokerProxyFactoryBean proxyFactoryBean = new HttpInvokerProxyFactoryBean();
         proxyFactoryBean.setServiceUrl("http://localhost:8087/HelloService");
-        proxyFactoryBean.setServiceInterface(HelloService.class);
+        proxyFactoryBean.setServiceInterface(ComplexOperationService.class);
         proxyFactoryBean.afterPropertiesSet();
 
-        HelloService helloService = (HelloService) proxyFactoryBean.getObject();
+        ComplexOperationService complexOperationService = (ComplexOperationService) proxyFactoryBean.getObject();
         Thread operationCallThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Long result = helloService.complexOperation(0L);
+                    Long result = complexOperationService.complexOperation(0L);
                     System.out.println("remote complex operation result = " + result);
                 } catch (InterruptedException e) {
                     System.out.println("remote complex operation was canceled");
@@ -78,7 +78,7 @@ public class EmbeddedRemotingTest {
         });
         operationCallThread.start();
         Thread.sleep(5000);
-        helloService.cancelComplexOperation();
+        complexOperationService.cancelComplexOperation();
         operationCallThread.join();
     }
     //@Test
@@ -86,9 +86,9 @@ public class EmbeddedRemotingTest {
         //startServer();
 
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("remoting-client-context.xml");
-        helloService = (HelloService) ctx.getBean("httpRemotingHelloService");
+        complexOperationService = (ComplexOperationService) ctx.getBean("httpRemotingHelloService");
 
-        String hello = helloService.sayHello("John");
+        String hello = complexOperationService.sayHello("John");
         Assert.assertNotNull(hello);
         System.out.println("sayHello: " + hello);
     }

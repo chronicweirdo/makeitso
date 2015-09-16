@@ -11,7 +11,7 @@
     <!--bean id="defaultHandlerMapping"
           class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" /-->
 
-    <bean id="helloService" class="com.cacoveanu.makeitso.remoting.HelloServiceImpl"/>
+    <bean id="helloService" class="com.cacoveanu.makeitso.remoting.ComplexOperationServiceImpl"/>
 
     <!-- SpringHTTP Service Exposure -->
 

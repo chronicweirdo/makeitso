@@ -9,20 +9,20 @@ import javax.annotation.PostConstruct;
 /**
  * Created by silviu on 2015-09-15.
  */
-@Component("/HelloService")
-public class HelloServiceExporter extends HttpInvokerServiceExporter {
+@Component("/ComplexService")
+public class ComplexOperationServiceExporter extends HttpInvokerServiceExporter {
 
     @Autowired
-    private HelloService helloService;
+    private ComplexOperationService complexOperationService;
 
-    public void setHelloService(HelloService helloService) {
-        this.helloService = helloService;
+    public void setComplexOperationService(ComplexOperationService complexOperationService) {
+        this.complexOperationService = complexOperationService;
     }
 
     @PostConstruct
     public void init() {
-        this.setService(helloService);
-        this.setServiceInterface(HelloService.class);
+        this.setService(complexOperationService);
+        this.setServiceInterface(ComplexOperationService.class);
         System.out.println("finished initializing service exporter");
     }
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Created by silviu on 2015-09-15.
  */
-public class JettyTest {
+public class RemotingServerTest {
 
     @Test
     public void startServer() throws Exception {
@@ -38,7 +38,7 @@ public class JettyTest {
 
     private WebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.cacoveanu.makeitso");
+        context.setConfigLocation("com.cacoveanu.makeitso.remoting");
         context.getEnvironment().setDefaultProfiles("dev");
         return context;
     }

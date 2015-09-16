@@ -11,7 +11,7 @@
                   value="http://localhost:8087/HelloService">
         </property>
         <property name="serviceInterface"
-                  value="com.cacoveanu.makeitso.remoting.HelloService">
+                  value="com.cacoveanu.makeitso.remoting.ComplexOperationService">
         </property>
     </bean>
 
