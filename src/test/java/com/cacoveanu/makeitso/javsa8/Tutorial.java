@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 
 /**
  * Created by scacoveanu on 25/9/2015.
+ *
+ * Inspired from: http://zeroturnaround.com/rebellabs/java-8-explained-applying-lambdas-to-java-collections/
  */
 public class Tutorial {
 
